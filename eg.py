@@ -92,3 +92,4 @@ def test_dropdown(driver):
     selected_option = dropdown.first_selected_option.text
     assert selected_option == "Option 2"
 time.sleep(2)
+# Test 6 : Dropdown Test
