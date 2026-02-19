@@ -1,5 +1,4 @@
 import time
-
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,9 +8,6 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# -----------------------------
-# PyTest Fixture (Setup & Teardown)
-# -----------------------------
 @pytest.fixture
 def driver():
     driver = webdriver.Chrome(
@@ -23,18 +19,16 @@ def driver():
     driver.quit()
 time.sleep(2)
 
-# -----------------------------
+
 # Test 1 : Verify Page Title
-# -----------------------------
+
 def test_page_title(driver):
     assert "Try Testing This" in driver.title
 
     time.sleep(2)
 
-
-# -----------------------------
 # Test 2 : Alert Button
-# -----------------------------
+
 def test_alert_button(driver):
     wait = WebDriverWait(driver, 10)
 
@@ -44,52 +38,61 @@ def test_alert_button(driver):
         )
     )
     alert_button.click()
-
+    time.sleep(2)
     alert = driver.switch_to.alert
     assert alert.text is not None
     alert.accept()
-time.sleep(2)
+    time.sleep(2)
 
-# -----------------------------
+
 # Test 3 : Input Text Field
-# -----------------------------
+
 def test_input_field(driver):
     input_box = driver.find_element(By.ID, "fname")
-    input_box.send_keys("Automation Test")
+    input_box.send_keys("KEERTANA")
+    time.sleep(1)
+    assert input_box.get_attribute("value") == "KEERTANA"
+    time.sleep(1)
+    input_box = driver.find_element(By.ID, "lname")
+    input_box.send_keys("N V")
+    time.sleep(1)
+    assert input_box.get_attribute("value") == "N V"
+    time.sleep(1)
 
-    assert input_box.get_attribute("value") == "Automation Test"
-
-time.sleep(2)
-# -----------------------------
-# Test 4 : Radio Button
-# -----------------------------
+# Test 5: Radio Button
 def test_radio_button(driver):
     radio = driver.find_element(By.ID, "male")
     radio.click()
-
     assert radio.is_selected()
-time.sleep(2)
+    time.sleep(1)
 
-# -----------------------------
-# Test 5 : Checkbox
-# -----------------------------
+
+# Test 6 : Checkbox
+
 def test_checkbox(driver):
-    time.sleep(3)
+    time.sleep(1)
     checkbox = driver.find_element(By.XPATH, "//input[@type='checkbox']")
     checkbox.click()
-    time.sleep(3)
-
+    time.sleep(1)
     assert checkbox.is_selected()
-time.sleep(2)
-# -----------------------------
-# Test 6 : Dropdown Test
-# -----------------------------
+    time.sleep(1)
+
+# Test 7: Dropdown Test
+
 def test_dropdown(driver):
-    time.sleep(2)
+    time.sleep(1)
     dropdown = Select(driver.find_element(By.ID, "option"))
     dropdown.select_by_visible_text("Option 2")
+    assert dropdown.first_selected_option.text=="Option 2"
+    time.sleep(1)
 
-    selected_option = dropdown.first_selected_option.text
-    assert selected_option == "Option 2"
-time.sleep(2)
-# Test 6 : Dropdown Test
+#Test 8: datalist
+def test_datalist(driver):
+    time.sleep(2)
+    input =driver.find_element(By.NAME,"Options")
+    input.send_keys("Strawberry")
+    assert input.get_attribute("value")=="Strawberry"
+    time.sleep(2)
+
+
+
